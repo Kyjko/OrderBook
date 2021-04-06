@@ -15,15 +15,15 @@ void TestMarketOrder(std::unique_ptr<OrderBook>& Book, const double size, const 
 	std::string stype;
 	switch (type) {
 	case OrderBook::OrderType::Buy: {
-		stype = std::string("Buy");
+		stype = "Buy";
 		break;
 	}
 	case OrderBook::OrderType::Sell: {
-		stype = std::string("Sell");
+		stype ="Sell";
 		break;
 	}
 	default: {
-		stype = std::string("unknown");
+		stype ="unknown";
 		break;
 	}
 	}
@@ -39,15 +39,15 @@ void TestLimitOrder(std::unique_ptr<OrderBook>& Book, const double size, const d
 	std::string stype;
 	switch (type) {
 	case OrderBook::OrderType::Buy: {
-		stype = std::string("Buy");
+		stype = "Buy";
 		break;
 	}
 	case OrderBook::OrderType::Sell: {
-		stype = std::string("Sell");
+		stype = "Sell";
 		break;
 	}
 	default: {
-		stype = std::string("unknown");
+		stype = "unknown";
 		break;
 	}
 	}
@@ -71,6 +71,7 @@ int main(int argc, char** argv) {
 
 	TestLimitOrder(Book, 550, 1300, OrderBook::OrderType::Sell);
 	TestMarketOrder(Book, 250, OrderBook::OrderType::Buy);
+	Book->DisplayOrders();
 
 	return 0;
 }

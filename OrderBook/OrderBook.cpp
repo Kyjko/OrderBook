@@ -5,6 +5,7 @@ OrderBook::OrderBook() {}
 OrderBook::~OrderBook() {
 	bids = std::vector<Bid>();
 	asks = std::vector<Ask>();
+	orders = std::vector<Order>();
 }
 
 void OrderBook::AddAsk(const Ask& ask) noexcept {
@@ -117,6 +118,7 @@ void OrderBook::MarketOrder(const double size, const OrderType& type) noexcept {
 			AddBid(Bid(size - ask.size, asks[0].value));
 			asks.pop_back();
 		}
+		orders.push_back({ "marketorder", size, asks[0].value, type });
 		break;
 	}
 	case OrderType::Sell: {
@@ -132,6 +134,7 @@ void OrderBook::MarketOrder(const double size, const OrderType& type) noexcept {
 			AddAsk(Ask(size - bid.size, bids[0].value));
 			bids.pop_back();
 		}
+		orders.push_back({ "marketorder", size, bids[0].value, type });
 		break;
 	}
 	default: {break; }
@@ -158,6 +161,7 @@ void OrderBook::LimitOrder(const double size, const double price, const OrderTyp
 		else {
 			AddBid(Bid(size, price));
 		}
+		orders.push_back({"limitorder", size, price, type });
 		break;
 	}
 	case OrderType::Sell: {
@@ -178,8 +182,28 @@ void OrderBook::LimitOrder(const double size, const double price, const OrderTyp
 		else {
 			AddAsk(Ask(size, price));
 		}
+		orders.push_back({"limitorder", size, price, type });
 		break;
 	}
 	default: {break; }
+	}
+}
+
+void OrderBook::DisplayOrders() noexcept {
+	std::cout << "Orders: " << std::endl;
+	for (auto i = orders.begin(); i != orders.end(); i++) {
+		std::string stype;
+		switch (i->type) {
+		case OrderType::Buy:
+			stype = "Buy";
+			break;
+		case OrderType::Sell:
+			stype = "Sell";
+			break;
+		default:
+			stype = "unknown";
+			break;
+		}
+		std::cout << i->order << " - " << i->size << " - " << i->price << " - " << stype << std::endl;
 	}
 }

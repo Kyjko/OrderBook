@@ -12,6 +12,13 @@ public:
 		Buy
 	};
 
+	struct Order {
+		std::string order;
+		double size; 
+		double price;
+		OrderType type;
+	};
+
 	OrderBook();
 	~OrderBook();
 
@@ -24,12 +31,14 @@ public:
 	const double GetAskPrice() noexcept;
 	const double GetBidPrice() noexcept;
 
+	void DisplayOrders() noexcept;
+
 	void MarketOrder(const double size, const OrderType& type) noexcept;
 	void LimitOrder(const double size, const double price, const OrderType& type) noexcept;
 
 	std::vector<Bid> bids;
 	std::vector<Ask> asks;
-
+	std::vector<Order> orders;
 
 };
 
