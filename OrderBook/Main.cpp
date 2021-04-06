@@ -72,7 +72,5 @@ int main(int argc, char** argv) {
 	TestLimitOrder(Book, 550, 1300, OrderBook::OrderType::Sell);
 	TestMarketOrder(Book, 250, OrderBook::OrderType::Buy);
 
-	
-
 	return 0;
 }
