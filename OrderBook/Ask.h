@@ -1,15 +1,13 @@
 #pragma once
-#include <ostream>
+#include <iostream>
 class Ask {
 public:
-	Ask(const size_t size, const double value);
+	Ask(const double size, const double value);
+	Ask();
 
-	size_t size;
+	double size;
 	double value;
 	
 	friend std::ostream& operator<<(std::ostream& os, const Ask& ask);
 };
 
-std::ostream& operator<<(std::ostream& os, const Ask& ask) {
-	std::cout << ask.size << " " << ask.value;
-}
