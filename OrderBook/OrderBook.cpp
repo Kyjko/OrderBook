@@ -56,7 +56,7 @@ void OrderBook::AddBid(const Bid& bid) noexcept {
 	
 }
 
-void OrderBook::Print() noexcept {
+void OrderBook::Print() const noexcept {
 	std::cout << "Bid\n-----|-----\nSize \tPrice\n---- \t-----" << std::endl;
 	for (auto i = bids.begin(); i != bids.end(); i++) {
 		std::cout << i->size << " \t" << i->value << std::endl;
@@ -69,7 +69,7 @@ void OrderBook::Print() noexcept {
 	std::cout << "----------------" << std::endl;
 }
 
-const double OrderBook::GetMidprice() noexcept {
+const double OrderBook::GetMidprice() const noexcept {
 	if (!asks.empty() && !bids.empty()) {
 		return (asks[0].value + bids[0].value) / 2;
 	}
@@ -78,7 +78,7 @@ const double OrderBook::GetMidprice() noexcept {
 	}
 }
 
-const double OrderBook::GetSpread() noexcept {
+const double OrderBook::GetSpread() const noexcept {
 	if (!asks.empty() && !bids.empty()) {
 		return (asks[0].value + bids[0].value) / GetMidprice();
 	}
@@ -87,7 +87,7 @@ const double OrderBook::GetSpread() noexcept {
 	}
 }
 
-const double OrderBook::GetAskPrice() noexcept {
+const double OrderBook::GetAskPrice() const noexcept {
 	if (!asks.empty()) {
 		return asks[0].value;
 	}
@@ -95,7 +95,7 @@ const double OrderBook::GetAskPrice() noexcept {
 	return 0.0;
 }
 
-const double OrderBook::GetBidPrice() noexcept {
+const double OrderBook::GetBidPrice() const noexcept {
 	if (!bids.empty()) {
 		return bids[0].value;
 	}
@@ -139,6 +139,18 @@ void OrderBook::MarketOrder(const double size, const OrderType& type) noexcept {
 	}
 	default: {break; }
 	}
+}
+
+_NO_META void OrderBook::SortOrdersByPrice() noexcept {
+	std::sort(orders.begin(), orders.end(), [](const Order& a, const Order& b) -> bool {
+		return a.price > b.price;
+	});
+}
+
+_NO_META void OrderBook::SortOrdersBySize() noexcept {
+	std::sort(orders.begin(), orders.end(), [](const Order& a, const Order& b) -> bool {
+		return a.size > b.size;
+		});
 }
 
 void OrderBook::LimitOrder(const double size, const double price, const OrderType& type) noexcept {
@@ -189,7 +201,7 @@ void OrderBook::LimitOrder(const double size, const double price, const OrderTyp
 	}
 }
 
-void OrderBook::DisplayOrders() noexcept {
+void OrderBook::DisplayOrders() const noexcept {
 	std::cout << "Orders: " << std::endl;
 	for (auto i = orders.begin(); i != orders.end(); i++) {
 		std::string stype;

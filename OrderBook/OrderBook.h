@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Bid.h"
 #include "Ask.h"
+#include <algorithm>
+
+#define _NO_META
 
 class OrderBook {
 public:
@@ -24,14 +27,17 @@ public:
 
 	void AddBid(const Bid& bid) noexcept;
 	void AddAsk(const Ask& ask) noexcept;
-	void Print() noexcept;
-	
-	const double GetMidprice() noexcept;
-	const double GetSpread() noexcept;
-	const double GetAskPrice() noexcept;
-	const double GetBidPrice() noexcept;
+	void Print() const noexcept;
 
-	void DisplayOrders() noexcept;
+	_NO_META void SortOrdersByPrice() noexcept;
+	_NO_META void SortOrdersBySize() noexcept;
+	
+	const double GetMidprice() const noexcept;
+	const double GetSpread() const noexcept;
+	const double GetAskPrice() const noexcept;
+	const double GetBidPrice() const noexcept;
+
+	void DisplayOrders() const noexcept;
 
 	void MarketOrder(const double size, const OrderType& type) noexcept;
 	void LimitOrder(const double size, const double price, const OrderType& type) noexcept;
